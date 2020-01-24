@@ -3,27 +3,23 @@ const Schema = mongoose.Schema;
 
 let listingSchema = new Schema({
   listingId: Number,
-  listingDetails: {
-    price: Number,
-    bedrooms: Number,
-    bathrooms: Number,
-    squareFootage: Number,
-    streetAddress: {
-      addressLineOne: String,
-      addressLineTwo: String,
-      city: String,
-      state: String,
-      zip: Number,
-    },
+  price: Number,
+  beds: Number,
+  baths: Number,
+  squareFootage: Number,
+  streetAddress: {
+    addressLineOne: String,
+    addressLineTwo: String,
+    city: String,
+    state: String,
+    zip: Number,
   },
-  tags: {
-    notableFeatures: [String],
-    hotHome: Boolean,
-    nextOpenHouse: {
-      dayOfWeek: String,
-      startingTime: String,
-      endingTime: String
-    }
+  notableFeatures: [String],
+  hotHome: Boolean,
+  nextOpenHouse: {
+    dayOfWeek: String,
+    startingTime: String,
+    endingTime: String
   }
 });
 
@@ -35,6 +31,12 @@ let listingSchema = new Schema({
 var Listing = mongoose.model('Listing', listingSchema);
 
 // Pseudodata used for seeding
+
+// Helper method to pull a random listing from an array of data
+
+let randomData = (arr) => (
+  arr[Math.round(Math.random() * arr.length)]
+);
 
 // Images pulled
 let listOfImages = [
@@ -56,6 +58,25 @@ let features = [
   'Fixer-Upper',
   'Pool'
 ];
+
+let pickFeatures = () => {
+  let output = [];
+  let size = Math.round(Math.random() * 2) + 1
+
+  while (output.length < size) {
+    output.push(randomData(features));
+  }
+
+  return output;
+};
+
+let hotOrNot = () => {
+  if (Math.random() < .5) {
+    return false;
+  } else {
+    return true;
+  }
+};
 
 // Open house information - just populating with predetermined strings and made as two-hour or all-day (9AM - 5PM) blocks
 let openHouseDay = [
@@ -81,17 +102,20 @@ let setOpenHouse = () => {
   // Select a random time slot from openHouseTimes and openHouseDay
   // Returns an array containing [day, startTime, endTime]
   // May assign a 2-hr block or an all-day open house (9AM - 5PM)
-  let details = [];
-  details.push(openHouseDay[Math.round(Math.random())]);
+  let details = {};
+  details.dayOfWeek = randomData(openHouseDay);
 
   let coinFlip = Math.random();
 
   if (coinFlip < 0.8) {
     // select random 2-hr block
     let index = Math.round(Math.random() * 16);
-    details.push(openHouseTimes[index], openHouseTimes[index + 4]);
+    details.startingTime = openHouseTimes[index];
+    details.endingTime = openHouseTimes[index + 4];
   } else {
-    details.push(openHouseTimes[0], openHouseTimes[16]);
+    // set all-day block
+    details.startingTime = openHouseTimes[0];
+    details.endingTime = openHouseTimes[16];
   }
 
   return details;
@@ -99,38 +123,20 @@ let setOpenHouse = () => {
 
 // Address information
 let streetAddresses = [
-  {
-    addressLineOne: '4633 Gaviota Court'
-    addressLineTwo: ''
-  },
-  {
-    addressLineOne: '2149 Holbrook Drive'
-    addressLineTwo: ''
-  },
-  {
-    addressLineOne: '2420 College Avenue'
-    addressLineTwo: 'Apt 123'
-  },
-  {
-    addressLineOne: '1234 Hardknock Way'
-    addressLineTwo: 'Apt 987'
-  },
-  {
-    addressLineOne: '4023 San Gorgonio'
-    addressLineTwo: ''
-  },
-  {
-    addressLineOne: '45678 Austin Boulevard'
-    addressLineTwo: ''
-  }
-]
+  ['4633 Gaviota Court', ''],
+  ['2149 Holbrook Drive', ''],
+  ['2420 College Avenue', 'Apt 123'],
+  ['1234 Hardknock Way', 'Apt 987'],
+  ['4023 San Gorgonio', ''],
+  ['45678 Austin Boulevard', '']
+];
 
 let citiesAndStates = [
-  {'San Francisco', 'CA'},
-  {'Seattle', 'WA'},
-  {'Brooklyn', 'NY'},
-  {'Houston', 'TX'},
-  {'Chicago', 'IL'}
+  ['San Francisco', 'CA'],
+  ['Seattle', 'WA'],
+  ['Brooklyn', 'NY'],
+  ['Houston', 'TX'],
+  ['Chicago', 'IL']
 ];
 
 let writeZip = () => {
@@ -139,9 +145,28 @@ let writeZip = () => {
     zip = zip.concat(Math.floor(Math.random() * 9));
   }
   return zip;
-}
+};
 
-// Property information (other than listingId)
+let writeFullAddress = () => {
+  let address = {};
+  let addressLines = randomData(streetAddresses);
+  let location = randomData(citiesAndStates);
+  let zip = writeZip();
+
+  return {
+    addressLineOne: addressLines[0],
+    addressLineTwo: addressLines[1],
+    city: location[0],
+    state: location[1],
+    zip
+  };
+};
+
+// Property information
+
+let generateId = () => (
+  Math.round(Math.random() * 88888888) + 10000000
+);
 
 let countBeds = () => (
   Math.ceil(Math.random() * 5) + 1
@@ -158,3 +183,19 @@ let setPrice = () => (
 let setSize = () => (
   Math.ceil(Math.random() * 3000) + 450
 );
+
+// Helper function to generate object to be inserted to db
+
+let listingGenerator = () => {
+  return {
+    listingId: generateId(),
+    price: setPrice(),
+    beds: countBeds(),
+    baths: countBaths(),
+    squareFootage: setSize(),
+    streetAddress: writeFullAddress(),
+    notableFeatures: pickFeatures(),
+    hotHome: hotOrNot(),
+    nextOpenHouse: setOpenHouse()
+  };
+};
