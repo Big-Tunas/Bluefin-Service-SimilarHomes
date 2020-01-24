@@ -1,5 +1,10 @@
+const faker = require('faker');
 const mongoose = require('mongoose');
+const mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true});
 const Schema = mongoose.Schema;
+
+
 
 let listingSchema = new Schema({
   listingId: Number,
@@ -122,44 +127,52 @@ let setOpenHouse = () => {
 };
 
 // Address information
-let streetAddresses = [
-  ['4633 Gaviota Court', ''],
-  ['2149 Holbrook Drive', ''],
-  ['2420 College Avenue', 'Apt 123'],
-  ['1234 Hardknock Way', 'Apt 987'],
-  ['4023 San Gorgonio', ''],
-  ['45678 Austin Boulevard', '']
-];
+// let streetAddresses = [
+//   ['4633 Gaviota Court', ''],
+//   ['2149 Holbrook Drive', ''],
+//   ['2420 College Avenue', 'Apt 123'],
+//   ['1234 Hardknock Way', 'Apt 987'],
+//   ['4023 San Gorgonio', ''],
+//   ['45678 Austin Boulevard', '']
+// ];
 
-let citiesAndStates = [
-  ['San Francisco', 'CA'],
-  ['Seattle', 'WA'],
-  ['Brooklyn', 'NY'],
-  ['Houston', 'TX'],
-  ['Chicago', 'IL']
-];
+// let citiesAndStates = [
+//   ['San Francisco', 'CA'],
+//   ['Seattle', 'WA'],
+//   ['Brooklyn', 'NY'],
+//   ['Houston', 'TX'],
+//   ['Chicago', 'IL']
+// ];
 
-let writeZip = () => {
-  let zip = '';
-  while (zip.length < 5) {
-    zip = zip.concat(Math.floor(Math.random() * 9));
-  }
-  return zip;
-};
+// let writeZip = () => {
+//   let zip = '';
+//   while (zip.length < 5) {
+//     zip = zip.concat(Math.floor(Math.random() * 9));
+//   }
+//   return zip;
+// };
 
+// weighted towards homes over apartments
 let writeFullAddress = () => {
-  let address = {};
-  let addressLines = randomData(streetAddresses);
-  let location = randomData(citiesAndStates);
-  let zip = writeZip();
+  let coinFlip = Math.round(Math.random() + 0.3);
 
-  return {
-    addressLineOne: addressLines[0],
-    addressLineTwo: addressLines[1],
-    city: location[0],
-    state: location[1],
-    zip
-  };
+  if (coinFlip) {
+    return {
+      addressLineOne: faker.address.streetAddress(),
+      addressLineTwo: null,
+      city: faker.address.city(),
+      state: faker.address.stateAbbr(),
+      zip: faker.address.zipCode()
+    };
+  } else {
+    return {
+      addressLineOne: faker.address.streetAddress(),
+      addressLineTwo: faker.address.secondaryAddress(),
+      city: faker.address.city(),
+      state: faker.address.stateAbbr(),
+      zip: faker.address.zipCode()
+    };
+  }
 };
 
 // Property information
@@ -199,3 +212,17 @@ let listingGenerator = () => {
     nextOpenHouse: setOpenHouse()
   };
 };
+
+let randomListings = [];
+
+while (randomListings.length < 100) {
+  randomListings.push(new Listing(listingGenerator()));
+}
+
+Listing.insertMany(randomListings, (err, docs) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log('The following documents have been saved:');
+  console.log(docs);
+});
