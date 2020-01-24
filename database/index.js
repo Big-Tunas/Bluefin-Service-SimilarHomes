@@ -1,13 +1,14 @@
 const faker = require('faker');
 const mongoose = require('mongoose');
-const mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true});
+mongoose.Promise = require('bluebird');
+const conn = mongoose.createConnection('mongodb://localhost/listings');
 const Schema = mongoose.Schema;
 
-
+conn.dropCollection('listings');
 
 let listingSchema = new Schema({
   listingId: Number,
+  image: String,
   price: Number,
   beds: Number,
   baths: Number,
@@ -17,7 +18,7 @@ let listingSchema = new Schema({
     addressLineTwo: String,
     city: String,
     state: String,
-    zip: Number,
+    zip: String,
   },
   notableFeatures: [String],
   hotHome: Boolean,
@@ -51,6 +52,10 @@ let listOfImages = [
   'https://i1.wp.com/www10.aeccafe.com/blogs/arch-showcase/files/2018/09/1.1-min.jpg?w=1000&ssl=1',
   'https://www.cupapizarras.com/wp-content/uploads/2018/09/casa-pasiva-contemporanea-asturias.jpg'
 ];
+
+let pickImage = () => (
+  randomData(listOfImages)
+);
 
 // Home features to be included in notableFeatures; 1 <= notablesFeatures.length <= 3
 let features = [
@@ -202,6 +207,7 @@ let setSize = () => (
 let listingGenerator = () => {
   return {
     listingId: generateId(),
+    imageUrl: pickImage()
     price: setPrice(),
     beds: countBeds(),
     baths: countBaths(),
