@@ -1,10 +1,22 @@
 const faker = require('faker');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-const conn = mongoose.createConnection('mongodb://localhost/listings');
-const Schema = mongoose.Schema;
+mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true}, (err, db) => {
+  if (err) {
+    console.log('Error connecting to mongo');
+  } else {
+    db.collection('listings').drop((err, OK) => {
+      if (err) {
+        console.log('Error dropping listings: ' + err);
+      } else {
+        console.log('Success dropping listings');
+      }
+      return;
+    })
+  }
+});
 
-conn.dropCollection('listings');
+const Schema = mongoose.Schema;
 
 let listingSchema = new Schema({
   listingId: Number,
@@ -46,7 +58,7 @@ let randomData = (arr) => (
 
 // Images pulled
 let listOfImages = [
-  'https://media.architecturaldigest.com/photos/5601b15b5a2d8a2712e8979b/master/w_1600%2Cc_limit/uk-modern-houses-book03.jpg',
+  's3://big-tunas-similar-homes/images/image-5.jpg',
   'https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg',
   'https://i.pinimg.com/originals/2b/fb/6b/2bfb6b646097abbc26d218b78370c5c9.jpg',
   'https://i1.wp.com/www10.aeccafe.com/blogs/arch-showcase/files/2018/09/1.1-min.jpg?w=1000&ssl=1',
@@ -187,7 +199,7 @@ let generateId = () => (
 );
 
 let countBeds = () => (
-  Math.ceil(Math.random() * 5) + 1
+  Math.ceil(Math.random() * 6)
 );
 
 let countBaths = () => (
@@ -207,7 +219,7 @@ let setSize = () => (
 let listingGenerator = () => {
   return {
     listingId: generateId(),
-    imageUrl: pickImage()
+    imageUrl: pickImage(),
     price: setPrice(),
     beds: countBeds(),
     baths: countBaths(),
@@ -229,6 +241,5 @@ Listing.insertMany(randomListings, (err, docs) => {
   if (err) {
     console.log(err);
   }
-  console.log('The following documents have been saved:');
-  console.log(docs);
+  console.log('The documents have been saved');
 });
