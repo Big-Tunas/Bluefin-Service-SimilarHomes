@@ -10,11 +10,13 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "test": "jest --watchAll"
+    "test": "jest",
+    "seed": "node ./database/index.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "express": "^4.17.1",
+    "mongoose": "^5.8.9",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "styled-components": "^5.0.0"
@@ -25,6 +27,7 @@
     "@babel/preset-react": "^7.8.3",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
+    "bluebird": "^3.7.2",
     "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -33,6 +36,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "faker": "^4.1.0",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",
     "webpack": "^4.41.5",
