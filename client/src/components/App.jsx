@@ -20,7 +20,9 @@ const NearbyListingsContainer = (props) => {
   );
 
   return (
-    <ListingImage src="https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg" alt="4633 Gaviota Court, Bonita, CA 91902" />
+    <h2>Nearby Similar Listings</h2>
+    <ListingImage src="https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg" />
+    
   );
 };
 
