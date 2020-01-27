@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const ListingImage = (props) => {
 
@@ -10,7 +11,8 @@ const ListingImage = (props) => {
   `;
 
   return (
-    <CardImage src="https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg" alt="4633 Gaviota Court, Bonita, CA 91902" />
+    // <CardImage src="https://big-tunas-similar-homes.s3-us-west-1.amazonaws.com/images/image-1.jpg"/>
+    <CardImage src="https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg"/>
   );
 };
 
