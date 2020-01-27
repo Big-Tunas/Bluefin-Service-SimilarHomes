@@ -10,10 +10,11 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "test": "jest",
+    "test": "jest --watch --config ./jest.config.js",
     "seed": "node ./database/index.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.610.0",
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "mongoose": "^5.8.9",
@@ -29,6 +30,7 @@
     "babel-loader": "^8.0.6",
     "bluebird": "^3.7.2",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
@@ -38,6 +40,8 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "faker": "^4.1.0",
     "jest": "^25.1.0",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
     "nodemon": "^2.0.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
