@@ -1,26 +1,27 @@
 const faker = require('faker');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true}, (err, db) => {
-  if (err) {
-    console.log('Error connecting to mongo');
-  } else {
-    db.collection('listings').drop((err, OK) => {
-      if (err) {
-        console.log('Error dropping listings: ' + err);
-      } else {
-        console.log('Success dropping listings');
-      }
-      return;
-    })
-  }
-});
+mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true, useUnifiedTopology: true});
+// , (err, db) => {
+//   if (err) {
+//     console.log('Error connecting to mongo');
+//   } else {
+//     db.collection('listings').drop((err, OK) => {
+//       if (err) {
+//         console.log('Error dropping listings: ' + err);
+//       } else {
+//         console.log('Success dropping listings');
+//       }
+//       return;
+//     })
+//   }
+// });
 
 const Schema = mongoose.Schema;
 
 let listingSchema = new Schema({
   listingId: Number,
-  image: String,
+  imageUrl: String,
   price: Number,
   beds: Number,
   baths: Number,
@@ -58,7 +59,6 @@ let randomData = (arr) => (
 
 // Images pulled
 let listOfImages = [
-  's3://big-tunas-similar-homes/images/image-5.jpg',
   'https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg',
   'https://i.pinimg.com/originals/2b/fb/6b/2bfb6b646097abbc26d218b78370c5c9.jpg',
   'https://i1.wp.com/www10.aeccafe.com/blogs/arch-showcase/files/2018/09/1.1-min.jpg?w=1000&ssl=1',
@@ -231,15 +231,74 @@ let listingGenerator = () => {
   };
 };
 
-let randomListings = [];
-
-while (randomListings.length < 100) {
-  randomListings.push(new Listing(listingGenerator()));
-}
-
-Listing.insertMany(randomListings, (err, docs) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log('The documents have been saved');
+let listingCount = new Promise((res, rej) => {
+  Listing.countDocuments((err, count) => {
+    if (err) {
+      rej(err);
+    } else {
+      res(count)
+    }
+  });
 });
+
+listingCount.then(count => {
+  let randomListings = [];
+  if (count >= 100) {
+    return randomListings;
+  } else if (count < 100) {
+    while (count < 100) {
+      randomListings.push(new Listing(listingGenerator()));
+      count += 1;
+    }
+    console.log(randomListings);
+    return randomListings;
+  }
+})
+.then(arr => {
+  if (arr.length) {
+    Listing.insertMany(arr, (err, docs) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log('The documents have been saved');
+    });
+  } else {
+    console.log('DB is already fully seeded');
+  }
+})
+.catch(err => {
+  console.log(err);
+});
+
+
+let listingRetrieval = (cb) => {
+  console.log('Searching DB for listings');
+
+  let listings = new Promise((res, rej) => {
+    Listing.find((err, arr) => {
+      if (err) {
+        rej(err);
+      } else {
+        res(arr);
+      }
+    });
+  });
+
+  listings.then(results => {
+      let listings = [];
+      while (listings.length < 9) {
+        listings.push(results[Math.floor(Math.random() * results.length)]);
+      }
+      return listings;
+    })
+    .then(arr => {
+      cb(null, arr);
+    })
+    .catch(err => {
+      cb(err);
+    });
+};
+
+module.exports = {
+  listingRetrieval
+};

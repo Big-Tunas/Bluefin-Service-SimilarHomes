@@ -1,4 +1,5 @@
 // const aws = require('./aws.js');
+const db = require('../database/index.js')
 const express = require('express');
 const mainApp = express();
 const mainPort = 4004;
@@ -9,7 +10,15 @@ mainApp.use(express.urlencoded({extended: true}));
 
 
 mainApp.get('/image', (req, res) => {
-  console.log(req.body);
+  db.listingRetrieval((err, listings) => {
+    if (err) {
+      res.status(400);
+      res.end(err);
+    } else {
+      res.status(200);
+      res.send(listings);
+    }
+  });
 });
 
 mainApp.listen(mainPort, () => {
