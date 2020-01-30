@@ -1,12 +1,13 @@
 // const aws = require('./aws.js');
-const db = require('../database/index.js')
 const express = require('express');
+const db = require('../database/index.js');
+
 const mainApp = express();
 const mainPort = 4004;
 
 mainApp.use(express.static('public'));
 mainApp.use(express.json());
-mainApp.use(express.urlencoded({extended: true}));
+mainApp.use(express.urlencoded({ extended: true }));
 
 
 mainApp.get('/image', (req, res) => {
@@ -22,5 +23,6 @@ mainApp.get('/image', (req, res) => {
 });
 
 mainApp.listen(mainPort, () => {
+  // eslint-disable-next-line no-console
   console.log(`Main App is listening on port ${mainPort}, only use to serve up static HTML files.`);
 });
