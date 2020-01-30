@@ -1,7 +1,8 @@
 const faker = require('faker');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true, useUnifiedTopology: true});
+
+mongoose.connect('mongodb://localhost/listings', { useNewUrlParser: true, useUnifiedTopology: true });
 // , (err, db) => {
 //   if (err) {
 //     console.log('Error connecting to mongo');
@@ -17,9 +18,9 @@ mongoose.connect('mongodb://localhost/listings', {useNewUrlParser: true, useUnif
 //   }
 // });
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-let listingSchema = new Schema({
+const listingSchema = new Schema({
   listingId: Number,
   imageUrl: String,
   price: Number,
@@ -38,8 +39,8 @@ let listingSchema = new Schema({
   nextOpenHouse: {
     dayOfWeek: String,
     startingTime: String,
-    endingTime: String
-  }
+    endingTime: String,
+  },
 });
 
 // TO-DO: method to search for similar listings in Listings collection
@@ -47,30 +48,30 @@ let listingSchema = new Schema({
 
 // };
 
-var Listing = mongoose.model('Listing', listingSchema);
+const Listing = mongoose.model('Listing', listingSchema);
 
 // Pseudodata used for seeding
 
 // Helper method to pull a random listing from an array of data
 
-let randomData = (arr) => (
+const randomData = (arr) => (
   arr[Math.round(Math.random() * arr.length)]
 );
 
 // Images pulled
-let listOfImages = [
+const listOfImages = [
   'https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg',
   'https://i.pinimg.com/originals/2b/fb/6b/2bfb6b646097abbc26d218b78370c5c9.jpg',
   'https://i1.wp.com/www10.aeccafe.com/blogs/arch-showcase/files/2018/09/1.1-min.jpg?w=1000&ssl=1',
-  'https://www.cupapizarras.com/wp-content/uploads/2018/09/casa-pasiva-contemporanea-asturias.jpg'
+  'https://www.cupapizarras.com/wp-content/uploads/2018/09/casa-pasiva-contemporanea-asturias.jpg',
 ];
 
-let pickImage = () => (
+const pickImage = () => (
   randomData(listOfImages)
 );
 
 // Home features to be included in notableFeatures; 1 <= notablesFeatures.length <= 3
-let features = [
+const features = [
   'Yard',
   'Garage',
   'Fireplace',
@@ -78,12 +79,12 @@ let features = [
   'Hardwood Floor',
   'Low Street Noise',
   'Fixer-Upper',
-  'Pool'
+  'Pool',
 ];
 
-let pickFeatures = () => {
-  let output = [];
-  let size = Math.round(Math.random() * 2) + 1
+const pickFeatures = () => {
+  const output = [];
+  const size = Math.round(Math.random() * 2) + 1;
 
   while (output.length < size) {
     output.push(randomData(features));
@@ -92,21 +93,21 @@ let pickFeatures = () => {
   return output;
 };
 
-let hotOrNot = () => {
-  if (Math.random() < .5) {
+const hotOrNot = () => {
+  if (Math.random() < 0.5) {
     return false;
-  } else {
-    return true;
   }
+  return true;
 };
 
-// Open house information - just populating with predetermined strings and made as two-hour or all-day (9AM - 5PM) blocks
-let openHouseDay = [
+// Open house information - just populating with predetermined strings and made
+// as two-hour or all-day (9AM - 5PM) blocks
+const openHouseDay = [
   'Sat',
-  'Sun'
+  'Sun',
 ];
 
-let openHouseTimes = [
+const openHouseTimes = [
   '9AM', '9:30AM',
   '10AM', '10:30AM',
   '11:0AM', '11:30AM',
@@ -117,27 +118,26 @@ let openHouseTimes = [
   '4PM', '4:30PM',
   '5PM', '5:30PM',
   '6PM', '6:30PM',
-  '7PM'
+  '7PM',
 ];
 
-let setOpenHouse = () => {
+const setOpenHouse = () => {
   // Select a random time slot from openHouseTimes and openHouseDay
   // Returns an array containing [day, startTime, endTime]
   // May assign a 2-hr block or an all-day open house (9AM - 5PM)
-  let details = {};
+  const details = {};
   details.dayOfWeek = randomData(openHouseDay);
 
-  let coinFlip = Math.random();
+  const coinFlip = Math.random();
 
   if (coinFlip < 0.8) {
     // select random 2-hr block
-    let index = Math.round(Math.random() * 16);
+    const index = Math.round(Math.random() * 16);
     details.startingTime = openHouseTimes[index];
     details.endingTime = openHouseTimes[index + 4];
   } else {
     // set all-day block
-    details.startingTime = openHouseTimes[0];
-    details.endingTime = openHouseTimes[16];
+    [details.startingTime,,,,,,,,,,,,,,,, details.endingTime] = openHouseTimes;
   }
 
   return details;
@@ -170,8 +170,8 @@ let setOpenHouse = () => {
 // };
 
 // weighted towards homes over apartments
-let writeFullAddress = () => {
-  let coinFlip = Math.round(Math.random() + 0.3);
+const writeFullAddress = () => {
+  const coinFlip = Math.round(Math.random() + 0.3);
 
   if (coinFlip) {
     return {
@@ -179,102 +179,104 @@ let writeFullAddress = () => {
       addressLineTwo: null,
       city: faker.address.city(),
       state: faker.address.stateAbbr(),
-      zip: faker.address.zipCode()
-    };
-  } else {
-    return {
-      addressLineOne: faker.address.streetAddress(),
-      addressLineTwo: faker.address.secondaryAddress(),
-      city: faker.address.city(),
-      state: faker.address.stateAbbr(),
-      zip: faker.address.zipCode()
+      zip: faker.address.zipCode(),
     };
   }
+  return {
+    addressLineOne: faker.address.streetAddress(),
+    addressLineTwo: faker.address.secondaryAddress(),
+    city: faker.address.city(),
+    state: faker.address.stateAbbr(),
+    zip: faker.address.zipCode(),
+  };
 };
 
 // Property information
 
-let generateId = () => (
+const generateId = () => (
   Math.round(Math.random() * 88888888) + 10000000
 );
 
-let countBeds = () => (
+const countBeds = () => (
   Math.ceil(Math.random() * 6)
 );
 
-let countBaths = () => (
-  (Math.random() < .5) ? Math.ceil(Math.random() * 5) + 1 : Math.ceil(Math.random() * 5) + 0.5
+const countBaths = () => (
+  (Math.random() < 0.5) ? Math.ceil(Math.random() * 5) + 1 : Math.ceil(Math.random() * 5) + 0.5
 );
 
-let setPrice = () => (
+const setPrice = () => (
   Math.ceil((Math.random() * 2250000) % 1000) * 1000 + 700000
 );
 
-let setSize = () => (
+const setSize = () => (
   Math.ceil(Math.random() * 3000) + 450
 );
 
 // Helper function to generate object to be inserted to db
 
-let listingGenerator = () => {
-  return {
-    listingId: generateId(),
-    imageUrl: pickImage(),
-    price: setPrice(),
-    beds: countBeds(),
-    baths: countBaths(),
-    squareFootage: setSize(),
-    streetAddress: writeFullAddress(),
-    notableFeatures: pickFeatures(),
-    hotHome: hotOrNot(),
-    nextOpenHouse: setOpenHouse()
-  };
-};
+const listingGenerator = () => ({
+  listingId: generateId(),
+  imageUrl: pickImage(),
+  price: setPrice(),
+  beds: countBeds(),
+  baths: countBaths(),
+  squareFootage: setSize(),
+  streetAddress: writeFullAddress(),
+  notableFeatures: pickFeatures(),
+  hotHome: hotOrNot(),
+  nextOpenHouse: setOpenHouse(),
+});
 
-let listingCount = new Promise((res, rej) => {
+const listingCount = new Promise((res, rej) => {
   Listing.countDocuments((err, count) => {
     if (err) {
       rej(err);
     } else {
-      res(count)
+      res(count);
     }
   });
 });
 
-listingCount.then(count => {
-  let randomListings = [];
-  if (count >= 100) {
-    return randomListings;
-  } else if (count < 100) {
-    while (count < 100) {
+listingCount.then((count) => {
+  const randomListings = [];
+  let docs = count;
+  if (count < 100) {
+    while (docs < 100) {
       randomListings.push(new Listing(listingGenerator()));
-      count += 1;
+      docs += 1;
     }
-    console.log(randomListings);
     return randomListings;
   }
+  return randomListings;
 })
-.then(arr => {
-  if (arr.length) {
-    Listing.insertMany(arr, (err, docs) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log('The documents have been saved');
-    });
-  } else {
-    console.log('DB is already fully seeded');
-  }
-})
-.catch(err => {
-  console.log(err);
-});
+  .then((arr) => {
+    if (arr.length) {
+      Listing.insertMany(arr, (err) => {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.log(err);
+        }
+        // eslint-disable-next-line no-console
+        console.log('The documents have been saved');
+      });
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('DB is already fully seeded');
+    }
+  })
+  .catch((err) => {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  });
 
 
-let listingRetrieval = (cb) => {
+const listingRetrieval = (cb) => {
+  // eslint-disable-next-line no-console
   console.log('Searching DB for listings');
 
-  let listings = new Promise((res, rej) => {
+  const listings = new Promise((res, rej) => {
+    // eslint-disable-next-line array-callback-return
     Listing.find((err, arr) => {
       if (err) {
         rej(err);
@@ -284,21 +286,21 @@ let listingRetrieval = (cb) => {
     });
   });
 
-  listings.then(results => {
-      let listings = [];
-      while (listings.length < 9) {
-        listings.push(results[Math.floor(Math.random() * results.length)]);
-      }
-      return listings;
-    })
-    .then(arr => {
+  listings.then((results) => {
+    const docs = [];
+    while (docs.length < 9) {
+      docs.push(results[Math.floor(Math.random() * results.length)]);
+    }
+    return docs;
+  })
+    .then((arr) => {
       cb(null, arr);
     })
-    .catch(err => {
+    .catch((err) => {
       cb(err);
     });
 };
 
 module.exports = {
-  listingRetrieval
+  listingRetrieval,
 };
