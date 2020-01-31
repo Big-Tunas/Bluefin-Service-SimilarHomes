@@ -1,32 +1,23 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable import/extensions */
 import React from 'react';
-import PropTypes from 'prop-types';
 import ListingImage from './ListingImage.jsx';
 import ListingData from './ListingData.jsx';
 
-const SimilarListingsContainer = ({
-  imageUrl,
-  hotHome,
-  nextOpenHouse,
-  ...rest
-}) => (
-  <div className="listing">
-    <ListingImage src={imageUrl} hot={hotHome} openHouse={nextOpenHouse} />
-    <ListingData data={rest} />
-  </div>
+const SimilarListingsContainer = ({ data }) => {
+  const {
+    imageUrl,
+    hotHome,
+    nextOpenHouse,
+    ...rest
+  } = data;
 
-);
-
-SimilarListingsContainer.propTypes = {
-  imageUrl: PropTypes.string,
-  hotHome: PropTypes.bool,
-  nextOpenHouse: PropTypes.objectOf(PropTypes.object),
-};
-
-SimilarListingsContainer.defaultProps = {
-  imageUrl: 'https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg',
-  hotHome: false,
-  nextOpenHouse: null,
+  return (
+    <div className="listingContainer">
+      <ListingImage src={imageUrl} hot={hotHome} openHouse={nextOpenHouse} />
+      <ListingData info={rest} />
+    </div>
+  );
 };
 
 export default SimilarListingsContainer;

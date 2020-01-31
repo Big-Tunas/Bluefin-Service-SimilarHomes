@@ -30,21 +30,13 @@ class NearbyListingsContainer extends React.Component {
 
   render() {
     const { listings } = this.state;
-    let output;
-    if (!{ listings }.length) {
-      output = (
-        <div className="similar-listings-container">
-          Error rendering listings
-        </div>
-      );
-    } else {
-      const containers = listings.map((l) => <SimilarListingsContainer data={l} />);
-      output = (
-        <div className="similar-listings-container">
-          {containers}
-        </div>
-      );
-    }
+    const containers = listings.map((l) => <SimilarListingsContainer data={l} />);
+    const output = (
+      <div className="similar-listings-container">
+        {containers}
+      </div>
+    );
+    // }
     return output;
   }
 }

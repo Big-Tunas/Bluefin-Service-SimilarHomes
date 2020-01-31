@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const ListingData = ({ data }) => {
+const ListingData = ({ info }) => {
   const {
     price,
     beds,
@@ -9,7 +9,7 @@ const ListingData = ({ data }) => {
     squareFootage: area,
     notableFeatures: features,
     streetAddress: address,
-  } = data;
+  } = info;
 
   const addressBuilder = (obj) => {
     if (obj.addressLineTwo) {
@@ -84,7 +84,7 @@ const ListingData = ({ data }) => {
   );
 
   return (
-    <div className="listing-data">
+    <div className="listingData">
       <div className="price">
         {priceString(price)}
       </div>
@@ -109,11 +109,4 @@ const ListingData = ({ data }) => {
   );
 };
 
-ListingData.propTypes = {
-  data: PropTypes.object,
-};
-
-ListingData.defaultProps = {
-  data: {},
-};
 export default ListingData;

@@ -11,9 +11,9 @@ const ListingImage = (props) => {
   let image;
 
   if (!props.src) {
-    image = <CardImage src="https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg" />;
+    image = <CardImage className="listingImage" src="https://freshome.com/wp-content/uploads/2018/09/contemporary-exterior.jpg" />;
   } else {
-    image = <CardImage src={props.src} />;
+    image = <CardImage className="listingImage" src={props.src} />;
   }
 
   return image;
