@@ -55,7 +55,7 @@ const Listing = mongoose.model('Listing', listingSchema);
 // Helper method to pull a random listing from an array of data
 
 const randomData = (arr) => (
-  arr[Math.round(Math.random() * arr.length)]
+  arr[Math.floor(Math.random() * arr.length)]
 );
 
 // Images pulled
@@ -87,7 +87,10 @@ const pickFeatures = () => {
   const size = Math.round(Math.random() * 2) + 1;
 
   while (output.length < size) {
-    output.push(randomData(features));
+    const feature = randomData(features);
+    if (!output.includes(feature)) {
+      output.push(feature);
+    }
   }
 
   return output;

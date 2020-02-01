@@ -1,7 +1,53 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import styled from 'styled-components';
 
 const ListingData = ({ info }) => {
+  const DataDiv = styled.div`
+    position: relative;
+    padding: 1rem;
+    background-color: #fff;
+    color: #333;
+    font-family: "Libre Franklin", sans-serif;
+    height: 148px;
+  `;
+
+  const FeatureSpan = styled.span`
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 14px;
+    background-color: #f5f5f5;
+    padding: .25rem .75rem;
+    margin: 0;
+    margin-top: 9px;
+    margin-right: .375rem;
+    margin-bottom: 5px;
+  `;
+
+  const PriceSpan = styled.span`
+    font-size: 18px;
+    padding: .5rem 0;
+    margin: 0;
+  `;
+
+  const AddressSpan = styled.span`
+    font-size: 12px;
+    padding-bottom: 6px;
+    width: 148px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  `;
+
+  const DetailsDiv = styled.div`
+    margin: 0;
+    padding: 12px 0 9px;
+  `;
+
+  const DetailSpan = styled.span`
+    padding: 0 5px;
+  `;
+
   const {
     price,
     beds,
@@ -80,32 +126,32 @@ const ListingData = ({ info }) => {
   };
 
   const tagBuilder = (arr) => (
-    arr.map((tag) => <div className="tag">{tag}</div>)
+    arr.map((tag) => <FeatureSpan className="tag">{tag}</FeatureSpan>)
   );
 
   return (
-    <div className="listingData">
-      <div className="price">
+    <DataDiv className="listingData">
+      <PriceSpan className="price">
         {priceString(price)}
-      </div>
-      <div className="listing-details">
-        <span className="listing-detail beds">
+      </PriceSpan>
+      <DetailsDiv className="listing-details">
+        <DetailSpan className="listing-detail beds">
           {bedString(beds)}
-        </span>
-        <span className="listing-detail baths">
+        </DetailSpan>
+        <DetailSpan className="listing-detail baths">
           {bathString(baths)}
-        </span>
-        <span className="listing-detail area">
+        </DetailSpan>
+        <DetailSpan className="listing-detail area">
           {areaString(area)}
-        </span>
-      </div>
-      <div className="address">
+        </DetailSpan>
+      </DetailsDiv>
+      <AddressSpan className="address">
         {addressBuilder(address)}
-      </div>
+      </AddressSpan>
       <div className="tagsContainer">
         {tagBuilder(features)}
       </div>
-    </div>
+    </DataDiv>
   );
 };
 
