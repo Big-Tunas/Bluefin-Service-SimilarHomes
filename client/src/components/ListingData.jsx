@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import DataWrapper from './DataWrapper.jsx';
 
 const ListingData = ({ info }) => {
   const DataDiv = styled.div`
@@ -10,6 +11,8 @@ const ListingData = ({ info }) => {
     color: #333;
     font-family: "Libre Franklin", sans-serif;
     height: 148px;
+    width: 100%
+    box-sizing: border-box;
   `;
 
   const FeatureSpan = styled.span`
@@ -30,12 +33,12 @@ const ListingData = ({ info }) => {
     margin: 0;
   `;
 
-  const AddressSpan = styled.span`
-    font-size: 12px;
-    padding-bottom: 6px;
-    width: 148px;
-    white-space: nowrap;
+  const AddressSpan = styled.div`
+    font-size: .75rem;
+    padding-bottom: 12px;
+    width: 100%;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
   `;
 

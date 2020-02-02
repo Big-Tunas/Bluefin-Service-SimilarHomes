@@ -33,17 +33,30 @@ class NearbyListingsContainer extends React.Component {
     const { listings } = this.state;
     const containers = listings.map((l) => <SimilarListingsContainer data={l} />);
 
-    const ScrollingContainer = styled.div`
+    const ScrollingComponent = styled.div`
       display: grid;
-      grid-gap: 10px;
+      grid-gap: 16px;
       grid-template-columns: repeat(${listings.length}, 297px);
       grid-template-rows: 1fr;
+      width: 616px;
+      overflow-y: none;
+      overflow-x: scroll;
+      scroll-snap-type: inline mandatory;
+    `;
+
+    const ScrollingContainer = styled.div`
+      height: 400px;
     `;
 
     const output = (
-      <ScrollingContainer className="similar-listings">
-        {containers}
-      </ScrollingContainer>
+      <div id="section-title">
+        <h2 style={{ 'font-family': '"Libre Franklin", sans-serif' }}>Nearby Similar Homes</h2>
+        <ScrollingContainer>
+          <ScrollingComponent className="similar-listings">
+            {containers}
+          </ScrollingComponent>
+        </ScrollingContainer>
+      </div>
     );
     return output;
   }

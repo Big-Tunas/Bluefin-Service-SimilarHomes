@@ -12,9 +12,15 @@ const SimilarListingsContainer = ({ data }) => {
     height: 100%;
     width: 297px;
     margin: 0;
-    border: 1px gray solid;
-    margin-right: 8px;
-    margin-bottom: 5px;
+    border: 1px hidden;
+    box-sizing: border-box;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 0 2px 2px lightgrey;
+    scroll-snap-align: start;
+
+    &:hover {
+      box-shadow: 0px 0px 6px 6px lightgrey;
+    }
   `;
 
   const {
