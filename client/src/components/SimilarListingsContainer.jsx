@@ -10,7 +10,7 @@ const SimilarListingsContainer = ({ data }) => {
     position: relative;
     display: inline-block;
     height: 100%;
-    width: 297px;
+    width: 100%;
     margin: 0;
     border: 1px hidden;
     box-sizing: border-box;
@@ -20,6 +20,7 @@ const SimilarListingsContainer = ({ data }) => {
 
     &:hover {
       box-shadow: 0px 0px 6px 6px lightgrey;
+      cursor: pointer;
     }
   `;
 

@@ -14,8 +14,8 @@ const ListingImage = ({ src, openHouse, hot }) => {
     position: relative;
     display: block;
     box-sizing: border-box;
-    width: 297px;
-    height: 198px;
+    width: 356px;
+    height: 237px;
     overflow: none;
     z-index: -1 !important;
   `;

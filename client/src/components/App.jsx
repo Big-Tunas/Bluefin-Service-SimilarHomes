@@ -36,21 +36,37 @@ class NearbyListingsContainer extends React.Component {
     const ScrollingComponent = styled.div`
       display: grid;
       grid-gap: 16px;
-      grid-template-columns: repeat(${listings.length}, 297px);
+      grid-template-columns: repeat(${listings.length}, 356px);
       grid-template-rows: 1fr;
-      width: 616px;
+      width: 732px;
+      height: 400px;
       overflow-y: none;
       overflow-x: scroll;
       scroll-snap-type: inline mandatory;
     `;
 
     const ScrollingContainer = styled.div`
-      height: 400px;
+      height: 100%;
+      position: relative;
+      width: 100%
+      overflow-y: none;
+    `;
+
+    const ArrowContainer = styled.div`
+      position: relative;
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      background-color: white;
+      border: 1px solid grey;
     `;
 
     const output = (
       <div id="section-title">
         <h2 style={{ 'font-family': '"Libre Franklin", sans-serif' }}>Nearby Similar Homes</h2>
+        <ArrowContainer position="previous" />
+        <ArrowContainer position="next" />
         <ScrollingContainer>
           <ScrollingComponent className="similar-listings">
             {containers}
