@@ -1,7 +1,56 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import DataWrapper from './DataWrapper.jsx';
 
-const ListingData = ({ data }) => {
+const ListingData = ({ info }) => {
+  const DataDiv = styled.div`
+    position: relative;
+    padding: 1rem;
+    background-color: #fff;
+    color: #333;
+    font-family: "Libre Franklin", sans-serif;
+    height: 148px;
+    width: 100%
+    box-sizing: border-box;
+  `;
+
+  const FeatureSpan = styled.span`
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 14px;
+    background-color: #f5f5f5;
+    padding: .25rem .75rem;
+    margin: 0;
+    margin-top: 9px;
+    margin-right: .375rem;
+    margin-bottom: 5px;
+  `;
+
+  const PriceSpan = styled.span`
+    font-size: 18px;
+    padding: .5rem 0;
+    margin: 0;
+  `;
+
+  const AddressSpan = styled.div`
+    font-size: .75rem;
+    padding-bottom: 12px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  `;
+
+  const DetailsDiv = styled.div`
+    margin: 0;
+    padding: 12px 0 9px;
+  `;
+
+  const DetailSpan = styled.span`
+    padding: 0 5px;
+  `;
+
   const {
     price,
     beds,
@@ -9,7 +58,7 @@ const ListingData = ({ data }) => {
     squareFootage: area,
     notableFeatures: features,
     streetAddress: address,
-  } = data;
+  } = info;
 
   const addressBuilder = (obj) => {
     if (obj.addressLineTwo) {
@@ -80,40 +129,33 @@ const ListingData = ({ data }) => {
   };
 
   const tagBuilder = (arr) => (
-    arr.map((tag) => <div className="tag">{tag}</div>)
+    arr.map((tag) => <FeatureSpan className="tag">{tag}</FeatureSpan>)
   );
 
   return (
-    <div className="listing-data">
-      <div className="price">
+    <DataDiv className="listingData">
+      <PriceSpan className="price">
         {priceString(price)}
-      </div>
-      <div className="listing-details">
-        <span className="listing-detail beds">
+      </PriceSpan>
+      <DetailsDiv className="listing-details">
+        <DetailSpan className="listing-detail beds">
           {bedString(beds)}
-        </span>
-        <span className="listing-detail baths">
+        </DetailSpan>
+        <DetailSpan className="listing-detail baths">
           {bathString(baths)}
-        </span>
-        <span className="listing-detail area">
+        </DetailSpan>
+        <DetailSpan className="listing-detail area">
           {areaString(area)}
-        </span>
-      </div>
-      <div className="address">
+        </DetailSpan>
+      </DetailsDiv>
+      <AddressSpan className="address">
         {addressBuilder(address)}
-      </div>
+      </AddressSpan>
       <div className="tagsContainer">
         {tagBuilder(features)}
       </div>
-    </div>
+    </DataDiv>
   );
 };
 
-ListingData.propTypes = {
-  data: PropTypes.object,
-};
-
-ListingData.defaultProps = {
-  data: {},
-};
 export default ListingData;

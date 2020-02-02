@@ -70,7 +70,7 @@ const Listing3 = {
 };
 
 describe('<ListingData />', () => {
-  const wrapper = mount(<ListingData data={Listing1} />);
+  const wrapper = mount(<ListingData info={Listing1} />);
 
   it('should have a properly-formatted price', () => {
     expect(wrapper.find('.price').text()).toEqual('$1,446,000');
@@ -86,7 +86,7 @@ describe('<ListingData />', () => {
   });
 
   it('should differentiate between single beds/baths and multi beds/baths', () => {
-    const wrapper2 = mount(<ListingData data={Listing2} />);
+    const wrapper2 = mount(<ListingData info={Listing2} />);
     expect(wrapper2.find('.beds').text()).toEqual('4 Beds');
     expect(wrapper2.find('.baths').text()).toEqual('1 Bath');
   });
@@ -102,7 +102,7 @@ describe('<ListingData />', () => {
   });
 
   it('should properly handle empty data fields', () => {
-    const wrapper3 = mount(<ListingData data={Listing3} />);
+    const wrapper3 = mount(<ListingData info={Listing3} />);
     expect(wrapper3.find('.area').text()).toEqual('- Sq. Ft.');
   });
 });
