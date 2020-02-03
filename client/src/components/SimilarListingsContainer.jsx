@@ -6,20 +6,19 @@ import ListingImage from './ListingImage.jsx';
 import ListingData from './ListingData.jsx';
 
 const SimilarListingsContainer = ({ data }) => {
-  const ListingContainer = styled.div`
+  const ListingWrapper = styled.div`
     position: relative;
     display: inline-block;
     height: 100%;
     width: 100%;
     margin: 0;
-    border: 1px hidden;
     box-sizing: border-box;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 0 2px 2px lightgrey;
+    box-shadow: 0 0 3px 3px lightgrey;
     scroll-snap-align: start;
+    overflow-y: none;
 
     &:hover {
-      box-shadow: 0px 0px 6px 6px lightgrey;
+      box-shadow: 0px 0px 5px 5px lightgrey;
       cursor: pointer;
     }
   `;
@@ -32,14 +31,14 @@ const SimilarListingsContainer = ({ data }) => {
   } = data;
 
   return (
-    <ListingContainer className="listingContainer">
+    <ListingWrapper className="listingContainer">
       <div>
         <ListingImage src={imageUrl} hot={hotHome} openHouse={nextOpenHouse} />
       </div>
       <div>
         <ListingData info={rest} />
       </div>
-    </ListingContainer>
+    </ListingWrapper>
   );
 };
 

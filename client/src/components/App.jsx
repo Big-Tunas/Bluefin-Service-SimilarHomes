@@ -1,11 +1,12 @@
+/* eslint-disable import/extensions */
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-// eslint-disable-next-line import/extensions
 import SimilarListingsContainer from './SimilarListingsContainer.jsx';
+import ArrowContainer from './ArrowContainer.jsx';
 
-class NearbyListingsContainer extends React.Component {
+class NearbyListingsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +22,7 @@ class NearbyListingsContainer extends React.Component {
   }
 
   getListings() {
-    axios.get('http://localhost:4004/image')
+    axios.get('http://localhost:4004/listings')
       .then((listings) => {
         this.setState({
           listings: listings.data,
@@ -39,43 +40,28 @@ class NearbyListingsContainer extends React.Component {
       grid-template-columns: repeat(${listings.length}, 356px);
       grid-template-rows: 1fr;
       width: 732px;
-      height: 400px;
-      overflow-y: none;
-      overflow-x: scroll;
-      scroll-snap-type: inline mandatory;
-    `;
-
-    const ScrollingContainer = styled.div`
       height: 100%;
-      position: relative;
-      width: 100%
-      overflow-y: none;
-    `;
+      border: hidden;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
 
-    const ArrowContainer = styled.div`
-      position: relative;
-      display: inline-block;
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      background-color: white;
-      border: 1px solid grey;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     `;
 
     const output = (
       <div id="section-title">
         <h2 style={{ 'font-family': '"Libre Franklin", sans-serif' }}>Nearby Similar Homes</h2>
-        <ArrowContainer position="previous" />
-        <ArrowContainer position="next" />
-        <ScrollingContainer>
-          <ScrollingComponent className="similar-listings">
-            {containers}
-          </ScrollingComponent>
-        </ScrollingContainer>
+        <ArrowContainer direction="previous" />
+        <ArrowContainer direction="next" />
+        <ScrollingComponent className="similar-listings" id="scrolling-container">
+          {containers}
+        </ScrollingComponent>
       </div>
     );
     return output;
   }
 }
 
-export default NearbyListingsContainer;
+export default NearbyListingsComponent;
