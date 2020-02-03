@@ -4,6 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import SimilarListingsContainer from './SimilarListingsContainer.jsx';
+import ScrollingContainer from './ScrollingContainer.jsx';
 import ArrowContainer from './ArrowContainer.jsx';
 
 class NearbyListingsComponent extends React.Component {
@@ -11,6 +12,7 @@ class NearbyListingsComponent extends React.Component {
     super(props);
     this.state = {
       listings: [],
+      left: 0,
     };
   }
 
@@ -30,11 +32,24 @@ class NearbyListingsComponent extends React.Component {
       });
   }
 
-  render() {
-    const { listings } = this.state;
-    const containers = listings.map((l) => <SimilarListingsContainer data={l} />);
+  showArrows(str) {
+    const { leftPosition } = this.state;
+    const scrollLocation = leftPosition;
+    if (str === 'right') {
+      this.setState({
+        leftPosition: scrollLocation + 732,
+      });
+    } else {
+      this.setState({
+        leftPosition: Math.max(scrollLocation - 732, 0),
+      });
+    }
+  }
 
-    const ScrollingComponent = styled.div`
+  render() {
+    const { listings, left } = this.state;
+
+    const MediaCarousel = styled.div`
       display: grid;
       grid-gap: 16px;
       grid-template-columns: repeat(${listings.length}, 356px);
@@ -52,12 +67,18 @@ class NearbyListingsComponent extends React.Component {
 
     const output = (
       <div id="section-title">
-        <h2 style={{ 'font-family': '"Libre Franklin", sans-serif' }}>Nearby Similar Homes</h2>
-        <ScrollingComponent className="similar-listings" id="scrolling-container">
-          <ArrowContainer direction="previous" />
-          {containers}
-          <ArrowContainer direction="next" />
-        </ScrollingComponent>
+        <h2 style={{
+          'font-family': '"Libre Franklin", sans-serif',
+          'font-weight': '400',
+        }}
+        >
+          Nearby Similar Homes
+        </h2>
+        <MediaCarousel className="similar-listings" id="scrolling-container">
+          <ArrowContainer direction="previous" dist={left} />
+          <ScrollingContainer listings={listings} />
+          <ArrowContainer direction="next" dist={left} />
+        </MediaCarousel>
       </div>
     );
     return output;

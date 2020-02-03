@@ -1,16 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import SimilarListingsContainer from './SimilarListingsContainer.jsx';
 
-const ScrollingContainer = (props) => {
-  const Wrapper = styled.div`
-  height: 100%;
-  position: relative;
-  width: 100%
-  overflow-y: none;
-`;
-
-  
-
+const ScrollingContainer = ({ listings }) => {
+  const containers = listings.map((l) => <SimilarListingsContainer data={l} />);
+  return containers;
 };
 
 export default ScrollingContainer;

@@ -6,7 +6,9 @@ const Wrap = styled.div`
   background-color: #fff;
   color: #333;
   font-family: "Libre Franklin", sans-serif;
-  height: 148px;
+  height: 145px;
+  width: 100%
+  box-sizing: border-box;
 `;
 
 export default Wrap;
