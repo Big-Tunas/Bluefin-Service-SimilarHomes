@@ -3,13 +3,16 @@ import styled from 'styled-components';
 
 const ArrowContainer = ({ direction }) => {
   const ArrowWrapper = styled.div`
-      position: relative;
+      position: absolute;
       display: inline-block;
       height: 25px;
       width: 25px;
       border-radius: 50%;
       background-color: white;
       border: 1px solid grey;
+      z-index: 1;
+      top: calc(65% - 25px);
+      left: ${(prop) => (prop.dir === 'left') ? '-12.5px' : 'calc(100% - 12.5px)'};
 
       &:hover {
         cursor: pointer;

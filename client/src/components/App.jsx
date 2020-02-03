@@ -53,10 +53,10 @@ class NearbyListingsComponent extends React.Component {
     const output = (
       <div id="section-title">
         <h2 style={{ 'font-family': '"Libre Franklin", sans-serif' }}>Nearby Similar Homes</h2>
-        <ArrowContainer direction="previous" />
-        <ArrowContainer direction="next" />
         <ScrollingComponent className="similar-listings" id="scrolling-container">
+          <ArrowContainer direction="previous" />
           {containers}
+          <ArrowContainer direction="next" />
         </ScrollingComponent>
       </div>
     );
