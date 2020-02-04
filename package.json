@@ -9,6 +9,8 @@
   },
   "scripts": {
     "react-dev": "webpack -d --watch",
+    "bundle": "webpack -d",
+    "server": "node server/index.js &",
     "server-dev": "nodemon server/index.js",
     "test": "jest --watch --config ./jest.config.js",
     "seed": "node ./database/index.js"
