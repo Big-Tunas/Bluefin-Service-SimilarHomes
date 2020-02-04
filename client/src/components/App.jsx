@@ -25,7 +25,7 @@ class NearbyListingsComponent extends React.Component {
   }
 
   getListings() {
-    axios.get('http://localhost:4004/listings')
+    axios.get('/listings')
       .then((listings) => {
         this.setState({
           listings: listings.data,

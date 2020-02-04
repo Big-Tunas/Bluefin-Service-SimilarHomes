@@ -6,9 +6,9 @@ const mainApp = express();
 const mainPort = 4004;
 
 mainApp.use(express.static('public'));
+
 mainApp.use(express.json());
 mainApp.use(express.urlencoded({ extended: true }));
-
 
 mainApp.get('/listings', (req, res) => {
   db.listingRetrieval((err, listings) => {
@@ -17,7 +17,7 @@ mainApp.get('/listings', (req, res) => {
       res.end(err);
     } else {
       res.status(200);
-      res.set({ 'Access-Control-Allow-Origin': '*' });
+      // res.set({ 'Access-Control-Allow-Origin': 'http://localhost:3000' });
       res.send(listings);
     }
   });
