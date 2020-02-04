@@ -17,6 +17,7 @@ mainApp.get('/listings', (req, res) => {
       res.end(err);
     } else {
       res.status(200);
+      res.set({ 'Access-Control-Allow-Origin': '*' });
       res.send(listings);
     }
   });
