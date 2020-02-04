@@ -4,17 +4,6 @@ import styled from 'styled-components';
 import DataWrapper from './DataWrapper.jsx';
 
 const ListingData = ({ info }) => {
-  const DataDiv = styled.div`
-    position: relative;
-    padding: 1rem;
-    background-color: #fff;
-    color: #333;
-    font-family: "Libre Franklin", sans-serif;
-    height: 148px;
-    width: 100%
-    box-sizing: border-box;
-  `;
-
   const FeatureSpan = styled.span`
     display: inline-block;
     font-size: 12px;
@@ -44,11 +33,11 @@ const ListingData = ({ info }) => {
 
   const DetailsDiv = styled.div`
     margin: 0;
-    padding: 12px 0 9px;
+    padding: 12px 0 12px;
   `;
 
   const DetailSpan = styled.span`
-    padding: 0 5px;
+    padding: 0 10px 0 0;
   `;
 
   const {
@@ -133,7 +122,7 @@ const ListingData = ({ info }) => {
   );
 
   return (
-    <DataDiv className="listingData">
+    <DataWrapper className="listingData">
       <PriceSpan className="price">
         {priceString(price)}
       </PriceSpan>
@@ -154,7 +143,7 @@ const ListingData = ({ info }) => {
       <div className="tagsContainer">
         {tagBuilder(features)}
       </div>
-    </DataDiv>
+    </DataWrapper>
   );
 };
 

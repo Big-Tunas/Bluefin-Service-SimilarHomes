@@ -10,7 +10,7 @@ mainApp.use(express.json());
 mainApp.use(express.urlencoded({ extended: true }));
 
 
-mainApp.get('/image', (req, res) => {
+mainApp.get('/listings', (req, res) => {
   db.listingRetrieval((err, listings) => {
     if (err) {
       res.status(400);
