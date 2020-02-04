@@ -63,12 +63,12 @@ const ArrowContainer = ({ direction, update }) => {
       left: target.scrollLeft - target.clientWidth,
       behavior: 'smooth',
     });
-    if (target.scrollLeft <= target.clientWidth * 1.5) {
-      leftDiv.style.visibility = 'hidden';
-    }
-    if (target.scrollLeft <= target.scrollWidth - target.clientWidth) {
-      document.getElementById('right-arrow').style.visibility = 'visible';
-    }
+    // if (target.scrollLeft <= target.clientWidth * 1.5) {
+    //   leftDiv.style.visibility = 'hidden';
+    // }
+    // if (target.scrollLeft <= target.scrollWidth - target.clientWidth) {
+    //   document.getElementById('right-arrow').style.visibility = 'visible';
+    // }
   };
 
   const scrollRight = (e) => {
@@ -79,12 +79,12 @@ const ArrowContainer = ({ direction, update }) => {
       left: target.scrollLeft + target.clientWidth,
       behavior: 'smooth',
     });
-    if (target.scrollLeft === 0) {
-      document.getElementById('left-arrow').style.visibility = 'visible';
-    }
-    if (target.scrollLeft > target.scrollWidth - (1.75 * target.clientWidth)) {
-      rightDiv.style.visibility = 'hidden';
-    }
+    // if (target.scrollLeft === 0) {
+    //   document.getElementById('left-arrow').style.visibility = 'visible';
+    // }
+    // if (target.scrollLeft > target.scrollWidth - (1.75 * target.clientWidth)) {
+    //   rightDiv.style.visibility = 'hidden';
+    // }
   };
 
   let arrow;
