@@ -3,7 +3,6 @@ import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import SimilarListingsContainer from './SimilarListingsContainer.jsx';
 import ScrollingContainer from './ScrollingContainer.jsx';
 import ArrowContainer from './ArrowContainer.jsx';
 
@@ -14,6 +13,8 @@ class NearbyListingsComponent extends React.Component {
       listings: [],
       left: 0,
     };
+
+    this.updateLeft = this.updateScrollPosition.bind(this);
   }
 
   componentDidMount() {
@@ -32,22 +33,22 @@ class NearbyListingsComponent extends React.Component {
       });
   }
 
-  showArrows(str) {
-    const { leftPosition } = this.state;
-    const scrollLocation = leftPosition;
-    if (str === 'right') {
-      this.setState({
-        leftPosition: scrollLocation + 732,
-      });
-    } else {
-      this.setState({
-        leftPosition: Math.max(scrollLocation - 732, 0),
-      });
+  updateScrollPosition(e) {
+    const { left } = this.state;
+    let newLeft;
+    if (e.target.getAttribute('name') === 'left') {
+      newLeft = Math.max(0, left - 732);
+    } else if (e.target.getAttribute('name') === 'right') {
+      newLeft = Math.min(2600, left + 732);
     }
+    this.setState({
+      left: newLeft,
+    });
   }
 
   render() {
     const { listings, left } = this.state;
+    const update = this.updateLeft;
 
     const MediaCarousel = styled.div`
       display: grid;
@@ -65,8 +66,13 @@ class NearbyListingsComponent extends React.Component {
       }
     `;
 
+    const AppWrapper = styled.div`
+      display: block;
+      min-width: 732px;
+    `;
+
     const output = (
-      <div id="section-title">
+      <AppWrapper id="section-title">
         <h2 style={{
           'font-family': '"Libre Franklin", sans-serif',
           'font-weight': '400',
@@ -75,11 +81,11 @@ class NearbyListingsComponent extends React.Component {
           Nearby Similar Homes
         </h2>
         <MediaCarousel className="similar-listings" id="scrolling-container">
-          <ArrowContainer direction="previous" dist={left} />
-          <ScrollingContainer listings={listings} />
-          <ArrowContainer direction="next" dist={left} />
+          <ArrowContainer direction="previous" dist={left} update={update} />
+          <ScrollingContainer listings={listings} onScroll={update} />
+          <ArrowContainer direction="next" dist={left} update={update} />
         </MediaCarousel>
-      </div>
+      </AppWrapper>
     );
     return output;
   }

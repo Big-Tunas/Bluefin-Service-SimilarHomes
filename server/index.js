@@ -17,6 +17,7 @@ mainApp.get('/listings', (req, res) => {
       res.end(err);
     } else {
       res.status(200);
+      res.writeHead({ 'Access-Control-Allow-Origin': 'http://localhost/3000' });
       res.send(listings);
     }
   });

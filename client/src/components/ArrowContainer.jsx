@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ArrowContainer = ({ direction, left }) => {
+const ArrowContainer = ({ direction, update }) => {
   const ArrowWrapper = styled.div`
       position: absolute;
       display: block;
@@ -30,6 +30,7 @@ const ArrowContainer = ({ direction, left }) => {
   const leftArrow = (
     <InnerWrapper name="left">
       <path
+        name="left"
         d="M 10 1
            L 4 6
            L 10 11"
@@ -43,6 +44,7 @@ const ArrowContainer = ({ direction, left }) => {
   const rightArrow = (
     <InnerWrapper name="right">
       <path
+        name="right"
         d="M 4 1
            L 10 6
            L 4 11"
@@ -87,9 +89,9 @@ const ArrowContainer = ({ direction, left }) => {
 
   let arrow;
   if (direction === 'previous') {
-    arrow = <ArrowWrapper id="left-arrow" dir="left" onClick={(e) => scrollLeft(e)}>{leftArrow}</ArrowWrapper>;
+    arrow = <ArrowWrapper id="left-arrow" dir="left" name="left" onClick={(e) => { scrollLeft(e); }}>{leftArrow}</ArrowWrapper>;
   } else {
-    arrow = <ArrowWrapper id="right-arrow" dir="right" onClick={(e) => scrollRight(e)}>{rightArrow}</ArrowWrapper>;
+    arrow = <ArrowWrapper id="right-arrow" dir="right" name="right" onClick={(e) => { scrollRight(e); }}>{rightArrow}</ArrowWrapper>;
   }
 
   return arrow;
