@@ -52,6 +52,7 @@ class NearbyListingsComponent extends React.Component {
 
     const MediaCarousel = styled.div`
       display: grid;
+      position: relative;
       grid-gap: 16px;
       grid-template-columns: repeat(${listings.length}, 356px);
       grid-template-rows: 1fr;
