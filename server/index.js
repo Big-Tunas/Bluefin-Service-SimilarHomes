@@ -10,14 +10,13 @@ mainApp.use(express.static('public'));
 mainApp.use(express.json());
 mainApp.use(express.urlencoded({ extended: true }));
 
-mainApp.get('/listings', (req, res) => {
+mainApp.get('/similar-listings', (req, res) => {
   db.listingRetrieval((err, listings) => {
     if (err) {
       res.status(400);
       res.end(err);
     } else {
       res.status(200);
-      // res.set({ 'Access-Control-Allow-Origin': 'http://localhost:3000' });
       res.send(listings);
     }
   });
