@@ -51,11 +51,10 @@ class NearbyListingsComponent extends React.Component {
     const update = this.updateLeft;
 
     const MediaCarousel = styled.div`
+      justify: center;
       display: grid;
-      position: relative;
-      grid-gap: 16px;
+      grid-gap: 0 16px;
       grid-template-columns: repeat(${listings.length}, 356px);
-      grid-template-rows: 1fr;
       width: 732px;
       height: 100%;
       border: hidden;
@@ -68,6 +67,7 @@ class NearbyListingsComponent extends React.Component {
     `;
 
     const AppWrapper = styled.div`
+      position: relative;
       display: block;
       min-width: 732px;
     `;

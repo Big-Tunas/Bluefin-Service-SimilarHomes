@@ -3,7 +3,7 @@ const express = require('express');
 const db = require('../database/index.js');
 
 const mainApp = express();
-const mainPort = 4004;
+const mainPort = 1337;
 
 mainApp.use(express.static('public'));
 

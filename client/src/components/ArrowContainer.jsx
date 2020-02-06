@@ -13,7 +13,6 @@ const ArrowContainer = ({ direction, update }) => {
       z-index: 1;
       top: calc(65% - 25px);
       left: ${(prop) => (prop.dir === 'left') ? '-12.5px' : 'calc(100% - 12.5px)'};
-      visibility: ${(prop) =>  prop.dir === 'left' ? 'hidden' : 'visible'};
 
       &:hover {
         cursor: pointer;
