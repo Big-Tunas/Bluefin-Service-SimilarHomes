@@ -4,3 +4,5 @@ jest.config.js
 /test
 /coverage
 /.vscode
+/server/aws.js
+/server/config.json

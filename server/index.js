@@ -1,4 +1,3 @@
-// const aws = require('./aws.js');
 const express = require('express');
 const db = require('../database/index.js');
 
@@ -23,6 +22,5 @@ mainApp.get('/similar-listings', (req, res) => {
 });
 
 mainApp.listen(mainPort, () => {
-  // eslint-disable-next-line no-console
   console.log(`Main App is listening on port ${mainPort}, only use to serve up static HTML files.`);
 });
