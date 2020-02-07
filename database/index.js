@@ -2,7 +2,7 @@ const faker = require('faker');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://localhost/listings', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://:27017/listings', { useNewUrlParser: true, useUnifiedTopology: true });
 // , (err, db) => {
 //   if (err) {
 //     console.log('Error connecting to mongo');
