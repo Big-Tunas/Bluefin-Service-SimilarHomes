@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  survey:
+    build: .
+    depends_on:
+      - 'database'
+    ports:
+      - '4004:4004'
+
+  database:
+    image: mongo:latest

@@ -8,6 +8,6 @@ COPY . /src/app
 
 RUN npm install --only=prod
 
-EXPOSE 3000
+EXPOSE 4004
 
 CMD [ "npm", "start" ]
