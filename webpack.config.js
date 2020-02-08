@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 module.exports = {
+  mode: 'production',
   entry: __dirname + '/client/src/index.jsx',
   module: {
     rules: [
