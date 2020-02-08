@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ArrowContainer = ({ direction, update }) => {
+const ArrowContainer = ({ direction }) => {
   const ArrowWrapper = styled.div`
       position: absolute;
       display: block;
@@ -12,7 +12,7 @@ const ArrowContainer = ({ direction, update }) => {
       border: 1px solid grey;
       z-index: 1;
       top: calc(65% - 25px);
-      left: ${(prop) => (prop.dir === 'left') ? '-12.5px' : 'calc(100% - 12.5px)'};
+      left: ${(prop) => prop.dir === 'left' ? '-12.5px' : 'calc(100% - 34.5px)'};
 
       &:hover {
         cursor: pointer;
@@ -56,7 +56,7 @@ const ArrowContainer = ({ direction, update }) => {
 
   const scrollLeft = (e) => {
     const target = document.getElementById('scrolling-container');
-    const leftDiv = document.getElementById('left-arrow');
+    // const leftDiv = document.getElementById('left-arrow');
     target.scrollTo({
       top: 0,
       left: target.scrollLeft - target.clientWidth,
@@ -72,7 +72,7 @@ const ArrowContainer = ({ direction, update }) => {
 
   const scrollRight = (e) => {
     const target = document.getElementById('scrolling-container');
-    const rightDiv = document.getElementById('right-arrow');
+    // const rightDiv = document.getElementById('right-arrow');
     target.scrollTo({
       top: 0,
       left: target.scrollLeft + target.clientWidth,

@@ -3,20 +3,6 @@ const mongoose = require('mongoose');
 const Promise = require('bluebird');
 
 mongoose.connect('mongodb://database/listings', { useNewUrlParser: true, useUnifiedTopology: true });
-// , (err, db) => {
-//   if (err) {
-//     console.log('Error connecting to mongo');
-//   } else {
-//     db.collection('listings').drop((err, OK) => {
-//       if (err) {
-//         console.log('Error dropping listings: ' + err);
-//       } else {
-//         console.log('Success dropping listings');
-//       }
-//       return;
-//     })
-//   }
-// });
 
 const { Schema } = mongoose;
 
@@ -145,32 +131,6 @@ const setOpenHouse = () => {
 
   return details;
 };
-
-// Address information
-// let streetAddresses = [
-//   ['4633 Gaviota Court', ''],
-//   ['2149 Holbrook Drive', ''],
-//   ['2420 College Avenue', 'Apt 123'],
-//   ['1234 Hardknock Way', 'Apt 987'],
-//   ['4023 San Gorgonio', ''],
-//   ['45678 Austin Boulevard', '']
-// ];
-
-// let citiesAndStates = [
-//   ['San Francisco', 'CA'],
-//   ['Seattle', 'WA'],
-//   ['Brooklyn', 'NY'],
-//   ['Houston', 'TX'],
-//   ['Chicago', 'IL']
-// ];
-
-// let writeZip = () => {
-//   let zip = '';
-//   while (zip.length < 5) {
-//     zip = zip.concat(Math.floor(Math.random() * 9));
-//   }
-//   return zip;
-// };
 
 // weighted towards homes over apartments
 const writeFullAddress = () => {

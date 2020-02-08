@@ -17,13 +17,6 @@ class NearbyListingsComponent extends React.Component {
     this.updateLeft = this.updateScrollPosition.bind(this);
   }
 
-  componentDidMount() {
-    const { listings } = this.state;
-    if (!{ listings }.length) {
-      this.getListings();
-    }
-  }
-
   getListings() {
     axios.get('/similar-listings')
       .then((listings) => {
@@ -49,6 +42,10 @@ class NearbyListingsComponent extends React.Component {
   render() {
     const { listings, left } = this.state;
     const update = this.updateLeft;
+
+    if (!listings.length) {
+      this.getListings();
+    }
 
     const MediaCarousel = styled.div`
       justify: center;
